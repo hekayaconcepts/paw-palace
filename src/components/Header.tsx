@@ -57,13 +57,16 @@ export default function Header() {
           href="/"
           style={{
             fontFamily: fonts.heading,
-            fontSize: isMobile ? '20px' : '24px',
+            fontSize: isMobile? '20px' : '24px',
             fontWeight: 700,
             color: colors.primary,
             textDecoration: 'none',
             letterSpacing: '1px',
             flexShrink: 0,
+            outline: 'none',
+            WebkitTapHighlightColor: 'transparent',
           }}
+          onFocus={(e) => (e.currentTarget.style.outline = 'none')}
         >
           Paw Palace
         </Link>
@@ -110,161 +113,4 @@ export default function Header() {
               flexShrink: 0,
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = colors.ctaHover;
-              e.currentTarget.style.transform = 'scale(1.02)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = colors.accent;
-              e.currentTarget.style.transform = 'scale(1)';
-            }}
-          >
-            Book Now
-          </Link>
-        )}
-
-        {/* Hamburger — RIGHT (mobile) */}
-        {isMobile && (
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Menu"
-            style={{
-              background: 'none',
-              border: 'none',
-              outline: 'none',
-              WebkitTapHighlightColor: 'transparent',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '5px',
-              padding: '10px',
-              width: '44px',
-              height: '44px',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <span
-              style={{
-                width: '22px',
-                height: '2px',
-                backgroundColor: colors.textDark,
-                display: 'block',
-                transition: 'all 0.3s',
-                transform: menuOpen ? 'rotate(45deg) translate(4px, 4px)' : 'rotate(0deg)',
-              }}
-            />
-            <span
-              style={{
-                width: '22px',
-                height: '2px',
-                backgroundColor: colors.textDark,
-                display: 'block',
-                opacity: menuOpen ? 0 : 1,
-                transition: 'opacity 0.3s',
-              }}
-            />
-            <span
-              style={{
-                width: '22px',
-                height: '2px',
-                backgroundColor: colors.textDark,
-                display: 'block',
-                transition: 'all 0.3s',
-                transform: menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : 'rotate(0deg)',
-              }}
-            />
-          </button>
-        )}
-      </header>
-
-      {/* Mobile Menu Overlay */}
-      {menuOpen && isMobile && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(255, 247, 237, 0.98)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: spacing.xl,
-            zIndex: 9998,
-          }}
-        >
-          {/* Close X — top right */}
-          <button
-            onClick={() => setMenuOpen(false)}
-            aria-label="Close menu"
-            style={{
-              position: 'absolute',
-              top: spacing.md,
-              right: spacing.md,
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              width: '44px',
-              height: '44px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '28px',
-              color: colors.textDark,
-            }}
-          >
-            ✕
-          </button>
-
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                fontFamily: fonts.heading,
-                fontSize: '28px',
-                color: colors.textDark,
-                textDecoration: 'none',
-                fontWeight: 600,
-                padding: `${spacing.md} ${spacing.xl}`,
-                minHeight: '44px',
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              {link.label}
-            </Link>
-          ))}
-
-          <Link
-            href="/booking"
-            onClick={() => setMenuOpen(false)}
-            style={{
-              fontFamily: fonts.body,
-              fontSize: fontSizes.body,
-              fontWeight: 600,
-              color: colors.textDark,
-              backgroundColor: colors.accent,
-              padding: `${spacing.md} ${spacing.xxl}`,
-              borderRadius: borderRadius.md,
-              textDecoration: 'none',
-              boxShadow: shadows.cta,
-              minHeight: '44px',
-              display: 'flex',
-              alignItems: 'center',
-              marginTop: spacing.md,
-            }}
-          >
-            Book Now
-          </Link>
-        </div>
-      )}
-    </>
-  );
-}
+              e.currentTarget.style.backgroundColor
