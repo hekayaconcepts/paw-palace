@@ -38,8 +38,6 @@ export default function Header() {
         style={{
           position: 'sticky',
           top: 0,
-          left: 0,
-          right: 0,
           zIndex: 9999,
           height: '64px',
           display: 'flex',
@@ -49,10 +47,9 @@ export default function Header() {
           backgroundColor: 'rgba(255, 247, 237, 0.92)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
-          borderBottom: `1px solid rgba(199, 123, 92, 0.1)`,
+          borderBottom: '1px solid rgba(199, 123, 92, 0.1)',
         }}
       >
-        {/* Logo — LEFT */}
         <Link
           href="/"
           style={{
@@ -62,7 +59,6 @@ export default function Header() {
             color: colors.primary,
             textDecoration: 'none',
             letterSpacing: '1px',
-            flexShrink: 0,
             outline: 'none',
             WebkitTapHighlightColor: 'transparent',
           }}
@@ -71,7 +67,6 @@ export default function Header() {
           Paw Palace
         </Link>
 
-        {/* Desktop Nav — CENTER */}
         {!isMobile && (
           <nav style={{ display: 'flex', alignItems: 'center', gap: spacing.lg }}>
             {navLinks.map((link) => (
@@ -84,7 +79,6 @@ export default function Header() {
                   color: colors.textDark,
                   textDecoration: 'none',
                   fontWeight: 500,
-                  transition: 'color 0.2s',
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = colors.primary)}
                 onMouseLeave={(e) => (e.currentTarget.style.color = colors.textDark)}
@@ -95,7 +89,6 @@ export default function Header() {
           </nav>
         )}
 
-        {/* CTA Button — RIGHT (desktop) */}
         {!isMobile && (
           <Link
             href="/booking"
@@ -109,8 +102,111 @@ export default function Header() {
               borderRadius: borderRadius.md,
               textDecoration: 'none',
               boxShadow: shadows.cta,
-              transition: 'background-color 0.2s, transform 0.2s',
-              flexShrink: 0,
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor
+              e.currentTarget.style.backgroundColor = colors.ctaHover;
+              e.currentTarget.style.transform = 'scale(1.02)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = colors.accent;
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          >
+            Book Now
+          </Link>
+        )}
+
+        {isMobile && (
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Menu"
+            style={{
+              background: 'none',
+              border: 'none',
+              outline: 'none',
+              WebkitTapHighlightColor: 'transparent',
+              cursor: 'pointer',
+              width: '44px',
+              height: '44px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '5px',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <span style={{ width: '22px', height: '2px', backgroundColor: colors.textDark, transition: 'all 0.3s', transform: menuOpen? 'rotate(45deg) translate(4px,4px)' : 'none' }} />
+            <span style={{ width: '22px', height: '2px', backgroundColor: colors.textDark, opacity: menuOpen? 0 : 1, transition: 'opacity 0.3s' }} />
+            <span style={{ width: '22px', height: '2px', backgroundColor: colors.textDark, transition: 'all 0.3s', transform: menuOpen? 'rotate(-45deg) translate(4px,-4px)' : 'none' }} />
+          </button>
+        )}
+      </header>
+
+      {menuOpen && isMobile && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(255, 247, 237, 0.98)',
+            backdropFilter: 'blur(20px)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: spacing.xl,
+            zIndex: 9998,
+          }}
+        >
+          <button
+            onClick={() => setMenuOpen(false)}
+            style={{
+              position: 'absolute',
+              top: spacing.md,
+              right: spacing.md,
+              background: 'none',
+              border: 'none',
+              fontSize: '28px',
+              width: '44px',
+              height: '44px',
+              cursor: 'pointer',
+            }}
+          >
+            ✕
+          </button>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                fontFamily: fonts.heading,
+                fontSize: '28px',
+                color: colors.textDark,
+                textDecoration: 'none',
+                fontWeight: 600,
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <Link
+            href="/booking"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              fontFamily: fonts.body,
+              fontWeight: 600,
+              backgroundColor: colors.accent,
+              color: colors.textDark,
+              padding: `${spacing.md} ${spacing.xxl}`,
+              borderRadius: borderRadius.md,
+              textDecoration: 'none',
+              marginTop: spacing.md,
+            }}
+          >
+            Book Now
+          </Link>
+        </div>
+      )}
+    </>
+  );
+                }
