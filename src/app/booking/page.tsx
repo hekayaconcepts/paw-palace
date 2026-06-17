@@ -71,4 +71,4 @@ export default function BookingPage() {
       </div>
     </main>
   );
-              }
+    }
