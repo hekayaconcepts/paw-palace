@@ -47,46 +47,87 @@ export default function BookingPage() {
   const inputStyle = { padding: '14px 16px', border: `2px solid ${colors.textDark}`, borderRadius: '12px', fontFamily: fonts.body, fontSize: '16px', backgroundColor: 'white', width: '100%', boxSizing: 'border-box' as const };
   const selectedLabel = selected.length === 0? 'Select Services' : selected.length === 1? SERVICES.find(s => s.id === selected[0])?.name : `${selected.length} services selected`;
 
+  // VANCOUVER COMMON BREED: Labrador Retriever
+  const bgImage = 'https://images.pexels.com/photos/2742261/pexels-photo-2742261.jpeg';
+
   if (sent) return (
-    <main style={{ backgroundColor: colors.background, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
-      <div style={{ textAlign: 'center', background: 'white', padding: '40px', borderRadius: '20px', border: `3px solid ${colors.textDark}` }}>
+    <main style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div style={{ textAlign: 'center', background: 'rgba(255,255,255,0.94)', padding: '40px', borderRadius: '20px', border: `3px solid ${colors.textDark}` }}>
         <div style={{ fontSize: '56px' }}>🐾</div>
         <h1 style={{ fontFamily: fonts.heading, fontSize: '36px', color: colors.textDark }}>Request Sent!</h1>
-        <p style={{ fontFamily: fonts.body, color: colors.textLight }}>We'll confirm within 2 hours.</p>
       </div>
     </main>
   );
 
   return (
-    <main onClick={closeAll} style={{ backgroundColor: colors.background, minHeight: '100vh', padding: '80px 16px 40px' }}>
-      <div style={{ maxWidth: '480px', width: '92%', margin: '0 auto', backgroundColor: 'white', padding: '24px', borderRadius: '20px', border: `3px solid ${colors.textDark}`, boxShadow: `6px 6px 0px ${colors.textDark}` }} onClick={e => e.stopPropagation()}>
+    <main onClick={closeAll} style={{ minHeight: '100vh', backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}>
+      {/* 22% CREAM OVERLAY - image is 78% visible */}
+      <div style={{ backgroundColor: 'rgba(244, 239, 234, 0.22)', minHeight: '100vh', padding: '80px 16px 40px' }}>
+        <div style={{ maxWidth: '480px', width: '92%', margin: '0 auto', backgroundColor: 'rgba(255, 255, 0.96)', padding: '24px', borderRadius: '20px', border: `3px solid ${colors.textDark}`, boxShadow: `6px 6px 0px ${colors.textDark}` }} onClick={e => e.stopPropagation()}>
 
-        <h1 style={{ fontFamily: fonts.heading, fontSize: 'clamp(32px, 9vw, 44px)', color: colors.textDark, margin: '0 0 20px 0', lineHeight: 1.1, wordBreak: 'break-word' }}>
-          Book Appointment
-        </h1>
+          <h1 style={{ fontFamily: fonts.heading, fontSize: 'clamp(28px, 8vw, 40px)', color: colors.textDark, margin: '0 0 20px 0', lineHeight: 1.1 }}>
+            Book Appointment
+          </h1>
 
-        <form onSubmit={submit} style={{ display: 'grid', gap: '12px' }}>
-          <div style={{ position: 'relative' }}>
-            <button type="button" onClick={() => setShowServices(!showServices)} style={{...inputStyle, textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-              <span style={{ color: selected.length? colors.textDark : '#999', fontSize: '15px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{selectedLabel}</span>
-              <span style={{ fontSize: '12px' }}>▼</span>
-            </button>
-            {showServices && (
-              <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '6px', backgroundColor: 'white', border: `2px solid ${colors.textDark}`, borderRadius: '12px', boxShadow: `4px 4px 0px ${colors.textDark}`, zIndex: 60, maxHeight: '260px', overflowY: 'auto' }}>
-                {['Dog','Cat'].map(group => (
-                  <div key={group}>
-                    <div style={{ padding: '8px 12px 4px', fontFamily: fonts.body, fontSize: '11px', color: colors.primary, fontWeight: 600, textTransform: 'uppercase' }}>{group}</div>
-                    {SERVICES.filter(s => s.group === group).map(s => {
-                      const active = selected.includes(s.id);
-                      return (
-                        <button key={s.id} type="button" onClick={() => toggleService(s.id)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', background: active? '#FFF4E8' : 'white', border: 'none', borderBottom: '1px solid #F0E6DD', cursor: 'pointer', textAlign: 'left' }}>
-                          <div style={{ width: '16px', height: '16px', borderRadius: '50%', border: `2px solid ${active? colors.primary : colors.textDark}`, backgroundColor: active? colors.primary : 'white', flexShrink: 0 }} />
-                          <span style={{ fontFamily: fonts.body, fontSize: '14px', color: colors.textDark }}>{s.name}</span>
-                        </button>
-                      );
-                    })}
+          <form onSubmit={submit} style={{ display: 'grid', gap: '12px' }}>
+            <div style={{ position: 'relative' }}>
+              <button type="button" onClick={() => setShowServices(!showServices)} style={{...inputStyle, textAlign: 'left', display: 'flex', justifyContent: 'space-between'}}>
+                <span style={{ color: selected.length? colors.textDark : '#999', fontSize: '15px' }}>{selectedLabel}</span>
+                <span>▼</span>
+              </button>
+              {showServices && (
+                <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '6px', backgroundColor: 'white', border: `2px solid ${colors.textDark}`, borderRadius: '12px', maxHeight: '260px', overflowY: 'auto', zIndex: 60 }}>
+                  {['Dog','Cat'].map(group => (
+                    <div key={group}>
+                      <div style={{ padding: '8px 12px', fontSize: '11px', color: colors.primary, fontWeight: 600 }}>{group}</div>
+                      {SERVICES.filter(s => s.group === group).map(s => {
+                        const active = selected.includes(s.id);
+                        return (
+                          <button key={s.id} type="button" onClick={() => toggleService(s.id)} style={{ width: '100%', padding: '10px 12px', background: active? '#FFF4E8' : 'white', border: 'none', textAlign: 'left', display: 'flex', gap: '10px', alignItems: 'center' }}>
+                            <div style={{ width: '16px', height: '16px', borderRadius: '50%', border: `2px solid ${colors.primary}`, backgroundColor: active? colors.primary : 'white' }} />
+                            <span style={{ fontSize: '14px' }}>{s.name}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <input style={inputStyle} placeholder="Your Name" required value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
+            <input style={inputStyle} type="email" placeholder="Email" required value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
+            <input style={inputStyle} type="tel" placeholder="Phone" required value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
+            <input style={inputStyle} placeholder="Pet Name" required value={form.petName} onChange={e => setForm({...form, petName: e.target.value})} />
+
+            <div style={{ position: 'relative' }}>
+              <button type="button" onClick={() => setShowCal(!showCal)} style={{...inputStyle, textAlign: 'left', display: 'flex', justifyContent: 'space-between'}}>
+                <span style={{ color: form.date? colors.textDark : '#999' }}>{form.date? formatDate(form.date) : 'Select Date'}</span>
+                <span>📅</span>
+              </button>
+              {showCal && (
+                <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '6px', backgroundColor: 'white', border: `2px solid ${colors.textDark}`, borderRadius: '12px', zIndex: 50 }}>
+                  <div style={{ backgroundColor: colors.primary, color: 'white', padding: '12px', display: 'flex', justifyContent: 'space-between' }}>
+                    <button type="button" onClick={() => setCalDate(new Date(year, month-1))} style={{ background: 'none', border: 'none', color: 'white' }}>‹</button>
+                    <span>{monthNames[month]} {year}</span>
+                    <button type="button" onClick={() => setCalDate(new Date(year, month+1))} style={{ background: 'none', border: 'none', color: 'white' }}>›</button>
                   </div>
-                ))}
-              </div>
-            )}
-            
+                  <div style={{ padding: '10px', display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: '3px' }}>
+                    {['S','M','T','W','T','F','S'].map(d => <div key={d} style={{ textAlign: 'center', fontSize: '11px' }}>{d}</div>)}
+                    {Array(firstDay).fill(0).map((_,i) => <div key={i} />)}
+                    {Array.from({length: daysInMonth}, (_,i) => i+1).map(day => { const d = new Date(year,month,day); const past = d < today; const sel = form.date === d.toISOString().split('T')[0]; return <button key={day} disabled={past} onClick={() => selectDate(day)} style={{ aspectRatio: '1', border: 'none', background: sel? colors.accent : 'transparent' }}>{day}</button>})}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <textarea style={{...inputStyle, minHeight: '80px'}} placeholder="Notes" value={form.notes} onChange={e => setForm({...form, notes: e.target.value})} />
+            <button type="submit" disabled={loading || selected.length===0 ||!form.date} style={{ backgroundColor: colors.accent, padding: '16px', borderRadius: '12px', border: `2px solid ${colors.textDark}`, fontWeight: 700 }}>
+              Send Booking Request
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+  );
+    }
