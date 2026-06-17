@@ -49,8 +49,8 @@ export default function ServicesPage() {
     { name: 'Works Package', featured: true },
   ];
 
-  const wobble = (e: React.MouseEvent | React.TouchEvent) => {
-    const el = e.currentTarget as HTMLElement;
+  const wobble = (e: any) => {
+    const el = e.currentTarget;
     el.style.animation = 'none';
     setTimeout(() => { el.style.animation = 'wobble 0.5s ease'; }, 10);
     setTimeout(() => { el.style.animation = ''; }, 500);
@@ -58,7 +58,7 @@ export default function ServicesPage() {
 
   return (
     <main style={{ backgroundColor: colors.background, minHeight: '100vh' }}>
-      <style dangerouslySetInnerHTML={{__html: `
+      <style>{`
         @keyframes wobble {
           0%, 100% { transform: rotate(0deg); }
           15% { transform: rotate(-3deg) scale(1.05); }
@@ -67,7 +67,7 @@ export default function ServicesPage() {
           60% { transform: rotate(2deg); }
           75% { transform: rotate(-1deg); }
         }
-      `}} />
+      `}</style>
 
       <section style={{ padding: '120px 24px 60px', textAlign: 'center' }}>
         <h1 style={{ fontFamily: fonts.heading, fontSize: 'clamp(48px, 10vw, 96px)', fontWeight: 700, color: colors.textDark, lineHeight: 0.9, letterSpacing: '-2px', marginBottom: '24px' }}>
@@ -83,18 +83,16 @@ export default function ServicesPage() {
           {coreServices.map((service, i) => (
             <div key={i} style={{
                 backgroundColor: 'white',
-                border: `3px solid ${colors.textDark}`,
+                border: '3px solid ' + colors.textDark,
                 borderRadius: '24px',
                 overflow: 'hidden',
-                boxShadow: `8px 8px 0px ${colors.textDark}`,
-                transform: !isMobile && (i % 2 === 1 ? 'translateX(20px)' : 'translateX(-20px)'),
+                boxShadow: '8px 8px 0px ' + colors.textDark,
+                transform: !isMobile ? (i % 2 === 1 ? 'translateX(20px)' : 'translateX(-20px)') : undefined,
                 transition: 'transform 0.3s',
               }}
-              onMouseEnter={e => !isMobile && (e.currentTarget.style.transform = 'translateX(0) rotate(0.5deg)')}
-              onMouseLeave={e => !isMobile && (e.currentTarget.style.transform = i % 2 === 1 ? 'translateX(20px)' : 'translateX(-20px)')}
             >
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', minHeight: isMobile ? 'auto' : '380px' }}>
-                <div style={{ position: 'relative', backgroundImage: `url(${service.image})`, backgroundSize: 'cover', backgroundPosition: 'center', minHeight: isMobile ? '240px' : 'auto' }}>
+                <div style={{ position: 'relative', backgroundImage: 'url(' + service.image + ')', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: isMobile ? '240px' : 'auto' }}>
                   <div style={{ position: 'absolute', inset: 0, backgroundColor: colors.primary, mixBlendMode: 'multiply', opacity: 0.2 }} />
                   <div style={{ position: 'absolute', top: '16px', left: '16px', fontFamily: fonts.heading, fontSize: isMobile ? '80px' : '120px', fontWeight: 700, color: 'white', opacity: 0.25, lineHeight: 1 }}>{service.num}</div>
                 </div>
@@ -111,7 +109,7 @@ export default function ServicesPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link href="/booking" style={{ backgroundColor: colors.accent, color: colors.textDark, padding: '12px 24px', borderRadius: '12px', textDecoration: 'none', fontWeight: 600, textAlign: 'center', border: `2px solid ${colors.textDark}`, boxShadow: `4px 4px 0px ${colors.textDark}`, alignSelf: isMobile ? 'stretch' : 'flex-start', display: 'block' }}>Book This</Link>
+                  <Link href="/booking" style={{ backgroundColor: colors.accent, color: colors.textDark, padding: '12px 24px', borderRadius: '12px', textDecoration: 'none', fontWeight: 600, textAlign: 'center', border: '2px solid ' + colors.textDark, boxShadow: '4px 4px 0px ' + colors.textDark, alignSelf: isMobile ? 'stretch' : 'flex-start', display: 'block' }}>Book This</Link>
                 </div>
               </div>
             </div>
@@ -134,8 +132,25 @@ export default function ServicesPage() {
                   color: colors.textDark,
                   padding: '12px 20px',
                   borderRadius: '100px',
-                  border: `2px solid ${colors.textDark}`,
+                  border: '2px solid ' + colors.textDark,
                   fontFamily: fonts.body,
                   fontWeight: 600,
                   fontSize: '14px',
-                  boxShadow: addon.featured ? `3px 3px 0px
+                  boxShadow: addon.featured ? '3px 3px 0px ' + colors.textDark : 'none',
+                  transform: addon.featured ? 'rotate(-2deg)' : 'none',
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                }}
+              >
+                {addon.name} {addon.featured && '✨'}
+              </div>
+            ))}
+          </div>
+          <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.8)', marginTop: '32px', fontFamily: fonts.body, fontSize: '14px' }}>
+            Add any to your bath or grooming • $8-15 each
+          </p>
+        </div>
+      </section>
+    </main>
+  );
+              }
