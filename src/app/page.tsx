@@ -96,6 +96,7 @@ export default function Home() {
               gap: spacing.md,
               alignItems: 'center',
               justifyContent: 'center',
+              marginBottom: '56px',
             }}
           >
             {/* Primary CTA */}
@@ -172,7 +173,7 @@ export default function Home() {
         <div
           style={{
             position: 'absolute',
-            bottom: '24px',
+            bottom: '16px',
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 2,
