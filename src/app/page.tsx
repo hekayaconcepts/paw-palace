@@ -19,7 +19,7 @@ export default function Home() {
       {/* Hero Section */}
       <section
         style={{
-          minHeight: '90vh',
+          minHeight: 'calc(100svh - 64px)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -47,8 +47,18 @@ export default function Home() {
           }}
         />
 
-        {/* Content */}
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '700px', padding: `0 ${spacing.md}` }}>
+        {/* Content wrapper */}
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 2,
+            padding: '0 24px',
+            maxWidth: '600px',
+            margin: '0 auto',
+            boxSizing: 'border-box',
+            width: '100%',
+          }}
+        >
           {/* Headline */}
           <h1
             style={{
@@ -102,10 +112,12 @@ export default function Home() {
                 textDecoration: 'none',
                 boxShadow: shadows.cta,
                 minHeight: '44px',
-                minWidth: isMobile ? '100%' : 'auto',
+                width: '100%',
+                maxWidth: '320px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                boxSizing: 'border-box',
                 transition: 'background-color 0.2s, transform 0.2s',
               }}
               onMouseEnter={(e) => {
@@ -134,10 +146,12 @@ export default function Home() {
                 borderRadius: borderRadius.md,
                 textDecoration: 'none',
                 minHeight: '44px',
-                minWidth: isMobile ? '100%' : 'auto',
+                width: '100%',
+                maxWidth: '320px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                boxSizing: 'border-box',
                 transition: 'background-color 0.2s, color 0.2s',
               }}
               onMouseEnter={(e) => {
@@ -158,7 +172,7 @@ export default function Home() {
         <div
           style={{
             position: 'absolute',
-            bottom: spacing.xl,
+            bottom: '24px',
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 2,
@@ -202,7 +216,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Keyframe animation via style tag */}
         <style>{`
           @keyframes scrollBounce {
             0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }

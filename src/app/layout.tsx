@@ -1,11 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { colors, fonts } from "@/lib/design-tokens";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: "Paw Palace Pet Grooming | Vancouver's Premier Dog Grooming",
   description: "Premium pet grooming in Vancouver. Natural products. Happy dogs. Book your appointment today.",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -18,9 +24,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           fontFamily: fonts.body,
           backgroundColor: colors.background,
           color: colors.textDark,
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <Header />

@@ -130,6 +130,8 @@ export default function Header() {
             style={{
               background: 'none',
               border: 'none',
+              outline: 'none',
+              WebkitTapHighlightColor: 'transparent',
               cursor: 'pointer',
               display: 'flex',
               flexDirection: 'column',
