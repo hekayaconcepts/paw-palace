@@ -1,17 +1,21 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   const { name, email, phone, petName, dogName, service, date, notes } = await req.json();
 
-  // support old 'dogName' and new 'petName'
   const pet = petName || dogName || 'your pet';
   const services = service || 'Grooming Service';
 
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('RESEND_API_KEY not set');
+    return NextResponse.json({ error: 'Email service not configured' }, { status: 500 });
+  }
+
   try {
-    // Email to you
+    const { Resend } = await import('resend');
+    const resend = new Resend(apiKey);
+
     await resend.emails.send({
       from: 'Paw Palace <onboarding@resend.dev>',
       to: 'hekayaconcepts@gmail.com',
@@ -33,7 +37,6 @@ export async function POST(req: Request) {
       `
     });
 
-    // Confirmation to client
     await resend.emails.send({
       from: 'Paw Palace <onboarding@resend.dev>',
       to: email,
