@@ -1,9 +1,40 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+const SLUG = 'nagayu-spa-vancouver';
+const STORAGE_KEY = `pawpalace-vote-${SLUG}`;
 
 export default function Article() {
-  const [likes, setLikes] = useState(31);
+  const [helpful, setHelpful] = useState(31);
+  const [notHelpful, setNotHelpful] = useState(2);
+  const [voted, setVoted] = useState<string | null>(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) setVoted(stored);
+  }, []);
+
+  const handleVote = (type: 'helpful' | 'not-helpful') => {
+    if (voted) return;
+    localStorage.setItem(STORAGE_KEY, type);
+    setVoted(type);
+    if (type === 'helpful') setHelpful((c) => c + 1);
+    else setNotHelpful((c) => c + 1);
+  };
+
+  const btnBase: React.CSSProperties = {
+    background: '#5C3D2E',
+    color: 'white',
+    padding: '10px 20px',
+    border: '2px solid #D4A855',
+    borderRadius: '8px',
+    fontWeight: 600,
+    fontSize: '14px',
+    cursor: voted ? 'not-allowed' : 'pointer',
+    opacity: voted ? 0.6 : 1,
+    transition: 'opacity 0.2s',
+  };
 
   return (
     <div style={{ background: '#FFF9F0', minHeight: '100vh', padding: '20px 0' }}>
@@ -20,32 +51,29 @@ export default function Article() {
             Nagayu CO2 Spa: Does It Help Itchy Skin?
           </h1>
           <div style={{ lineHeight: '1.7', color: '#333', marginTop: '16px' }}>
-            <p>We added Nagayu CO2 tablets to our tubs for 60 days and tracked 42 dogs with itchy skin, hot spots, and post-beach irritation. The results were better than we expected — and the science behind it is solid.</p>
+            <p>We added Nagayu CO2 tablets to our tubs for 60 days and tracked 42 dogs with itchy skin, hot spots, and post-beach irritation.</p>
 
             <h2 style={{ color: '#5C3D2E', marginTop: '24px' }}>How CO2 Spa Works</h2>
-            <p>The $17 add-on infuses carbonated water with CO2 micro-bubbles that penetrate deep into the coat and skin. These bubbles increase circulation at the follicle level, lift deep dirt and allergens without harsh shampoo, and create a gentle exfoliation that removes dead skin cells. It&apos;s the same technology used in human spa treatments — just scaled down for dogs who would rather eat the bubbles than sit still for them.</p>
+            <p>The $17 add-on infuses carbonated water with CO2 micro-bubbles that penetrate deep into the coat and skin, lifting dirt without harsh shampoo.</p>
 
-            <h2 style={{ color: '#5C3D2E', marginTop: '24px' }}>What We Tracked</h2>
-            <p>Over 60 days, we monitored 42 dogs with chronic itchy skin, hot spots, and post-beach irritation. Each dog received the CO2 spa treatment as part of their regular groom. Owners reported back at their next visit.</p>
-            <p><strong>78% of owners reported less scratching within 48 hours.</strong> Coats felt noticeably softer after the first session. Muddy paws — the eternal Vancouver problem — cleaned in half the time because the CO2 bubbles lifted embedded dirt that shampoo alone can&apos;t reach.</p>
+            <h2 style={{ color: '#5C3D2E', marginTop: '24px' }}>Results</h2>
+            <p><strong>78% of owners reported less scratching within 48 hours.</strong> Coats felt softer and muddy paws cleaned in half the time.</p>
 
             <h2 style={{ color: '#5C3D2E', marginTop: '24px' }}>Who Benefits Most</h2>
-            <p>Dogs with allergies see the biggest improvement. The CO2 treatment removes pollen, salt, and environmental irritants from the coat without stripping natural oils the way medicated shampoos do. We recommend it as a pre-treatment before hypoallergenic shampoo for maximum effect.</p>
-            <p>Breeds with dense undercoats — Goldens, Shepherds, and Doodles — benefit because the bubbles penetrate deeper than any shampoo can reach. Short-haired dogs still benefit from the increased circulation, but the effect is less dramatic.</p>
-
-            <h2 style={{ color: '#5C3D2E', marginTop: '24px' }}>How Often Should You Do It?</h2>
-            <p>For dogs with chronic skin issues, we recommend the CO2 spa every 4 to 6 weeks. For maintenance, every 8 to 10 weeks keeps the coat in good shape through the rainy season. It&apos;s not a cure for allergies — nothing replaces proper veterinary care — but it&apos;s the best pre-treatment we&apos;ve found for Vancouver&apos;s salt, pollen, and constant moisture.</p>
-            <p>At Paw Palace, we pair every CO2 spa with a hypoallergenic shampoo and a thorough blow-dry. Book a session and feel the difference in your dog&apos;s coat within one visit.</p>
+            <p>Dogs with allergies see the biggest improvement. We pair it with hypoallergenic shampoo for maximum effect.</p>
           </div>
         </article>
 
         <div style={{ background: 'white', padding: '20px', marginTop: '20px', borderRadius: '12px', textAlign: 'center', border: '2px solid #E8DCC6' }}>
-          <button
-            onClick={() => setLikes(likes + 1)}
-            style={{ background: '#5C3D2E', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '8px', fontWeight: '600', cursor: 'pointer' }}
-          >
-            👍 Helpful ({likes})
-          </button>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button onClick={() => handleVote('helpful')} style={btnBase} disabled={!!voted}>
+              👍 Helpful ({helpful})
+            </button>
+            <button onClick={() => handleVote('not-helpful')} style={btnBase} disabled={!!voted}>
+              👎 Not Helpful ({notHelpful})
+            </button>
+          </div>
+          {voted && <p style={{ margin: '8px 0 0', fontSize: '12px', color: '#8B7355' }}>Thanks for your feedback!</p>}
         </div>
       </div>
     </div>

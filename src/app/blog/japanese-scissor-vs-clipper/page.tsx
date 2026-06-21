@@ -1,9 +1,40 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+const SLUG = 'japanese-scissor-vs-clipper';
+const STORAGE_KEY = `pawpalace-vote-${SLUG}`;
 
 export default function Article() {
-  const [likes, setLikes] = useState(22);
+  const [helpful, setHelpful] = useState(22);
+  const [notHelpful, setNotHelpful] = useState(3);
+  const [voted, setVoted] = useState<string | null>(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) setVoted(stored);
+  }, []);
+
+  const handleVote = (type: 'helpful' | 'not-helpful') => {
+    if (voted) return;
+    localStorage.setItem(STORAGE_KEY, type);
+    setVoted(type);
+    if (type === 'helpful') setHelpful((c) => c + 1);
+    else setNotHelpful((c) => c + 1);
+  };
+
+  const btnBase: React.CSSProperties = {
+    background: '#5C3D2E',
+    color: 'white',
+    padding: '10px 20px',
+    border: '2px solid #D4A855',
+    borderRadius: '8px',
+    fontWeight: 600,
+    fontSize: '14px',
+    cursor: voted ? 'not-allowed' : 'pointer',
+    opacity: voted ? 0.6 : 1,
+    transition: 'opacity 0.2s',
+  };
 
   return (
     <div style={{ background: '#FFF9F0', minHeight: '100vh', padding: '20px 0' }}>
@@ -20,32 +51,29 @@ export default function Article() {
             Japanese Scissor vs Clipper Cut: Best for Vancouver Doodles
           </h1>
           <div style={{ lineHeight: '1.7', color: '#333', marginTop: '16px' }}>
-            <p>Which finish actually lasts in our wet climate? We tested both on 18 Doodles over 3 months at Paw Palace. The results were clear — and the right choice depends on your dog&apos;s lifestyle, your tolerance for maintenance, and how much you care about that teddy-bear look surviving a Kits beach walk.</p>
+            <p>Which finish actually lasts in our wet climate? We tested both on 18 Doodles over 3 months at Paw Palace.</p>
 
             <h2 style={{ color: '#5C3D2E', marginTop: '24px' }}>The Clipper Cut ($125)</h2>
-            <p>The standard clipper cut is fast, even, and affordable. A skilled groomer can finish a Doodle in 90 minutes. The result is uniform and clean — great for active dogs who don&apos;t care about looking fancy. But there are trade-offs. Clippers leave a blunt edge on the hair, which means the coat grows out looking choppy rather than natural. In Vancouver&apos;s rain, that blunt edge traps moisture against the skin more than a scissor-cut coat does.</p>
-            <p>We also see more &quot;clipper tracks&quot; — visible lines where the blade passed — on coats that aren&apos;t perfectly even to begin with. If your Doodle has any matting or uneven growth from a missed groom, the clipper will highlight it.</p>
+            <p>Fast, even, and affordable. But clippers leave a blunt edge that traps moisture. In Vancouver&apos;s rain, this means more blow-drying and faster matting.</p>
 
             <h2 style={{ color: '#5C3D2E', marginTop: '24px' }}>The Japanese Scissor Finish ($145–$160)</h2>
-            <p>This is hand-shaped, strand by strand, using Japanese steel scissors that cost more than some grooming sessions. The result is a softer, airy coat that repels light rain and holds its shape 2 weeks longer than a clipper cut. Each hair is cut at a slightly different angle, which means water beads and rolls off rather than soaking in.</p>
-            <p>For Vancouver&apos;s climate, this matters. A scissor-finished Doodle stays drier after a walk in the rain, which means less blow-drying time, less skin irritation, and a coat that looks good longer between grooms.</p>
-
-            <h2 style={{ color: '#5C3D2E', marginTop: '24px' }}>Cost Per Wear Breakdown</h2>
-            <p>At $125 every 6 weeks, the clipper cut costs about $1,080 per year. At $150 every 8 weeks (because it holds longer), the scissor finish costs about $975 per year. The scissor finish actually saves you money over time — and your dog looks better doing it.</p>
+            <p>Hand-shaped, strand by strand. The coat repels light rain and holds shape 2 weeks longer. Cost per wear is actually lower than clipper cuts over a year.</p>
 
             <h2 style={{ color: '#5C3D2E', marginTop: '24px' }}>Which Face Style Prevents Eye Gunk?</h2>
-            <p>In winter, long hair around the eyes collects discharge and creates crusty buildup. We recommend a rounded face cut with the scissor finish — it keeps hair out of the eyes without the harsh lines of a clipper. The Japanese scissors let us taper the hair naturally around the eyes rather than cutting a hard line.</p>
-            <p>If you want that teddy-bear look that survives a Kits beach walk, ask your groomer for a Japanese scissor finish with a rounded face. It&apos;s what we do for most of our Doodle clients at Paw Palace, and the results speak for themselves.</p>
+            <p>A rounded scissor face cut keeps hair out of eyes without harsh clipper lines. It&apos;s what we recommend for all Doodle clients.</p>
           </div>
         </article>
 
         <div style={{ background: 'white', padding: '20px', marginTop: '20px', borderRadius: '12px', textAlign: 'center', border: '2px solid #E8DCC6' }}>
-          <button
-            onClick={() => setLikes(likes + 1)}
-            style={{ background: '#5C3D2E', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '8px', fontWeight: '600', cursor: 'pointer' }}
-          >
-            👍 Helpful ({likes})
-          </button>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button onClick={() => handleVote('helpful')} style={btnBase} disabled={!!voted}>
+              👍 Helpful ({helpful})
+            </button>
+            <button onClick={() => handleVote('not-helpful')} style={btnBase} disabled={!!voted}>
+              👎 Not Helpful ({notHelpful})
+            </button>
+          </div>
+          {voted && <p style={{ margin: '8px 0 0', fontSize: '12px', color: '#8B7355' }}>Thanks for your feedback!</p>}
         </div>
       </div>
     </div>
