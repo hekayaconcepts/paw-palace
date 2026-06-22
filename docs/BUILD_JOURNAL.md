@@ -3,7 +3,7 @@
 > **Project:** Paw Palace Pet Grooming — Vancouver, Canada
 > **Repo:** https://github.com/hekayaconcepts/paw-palace
 > **Live URL:** https://paw-palace-six.vercel.app
-> **Last Updated:** June 21, 2026
+> **Last Updated:** June 22, 2026
 
 ---
 
@@ -17,9 +17,9 @@ src/
 │   ├── layout.tsx              ← Root layout (Header + Footer + global styles)
 │   ├── page.tsx                ← Homepage with hero section
 │   ├── about/
-│   │   └── page.tsx            ← About page (empty shell)
+│   │   └── page.tsx            ← About page — Magazine-style editorial layout (Kinfolk/Cereal inspired), asymmetric grid, pull quotes, scroll reveal + page tilt animations, owner bios (Hang Li & Hailun Sun)
 │   ├── accessibility/
-│   │   └── page.tsx            ← Accessibility statement (empty shell)
+│   │   └── page.tsx            ← Accessibility statement — WCAG 2.1 AA compliance
 │   ├── api/
 │   │   ├── book/route.ts       ← Booking email API (Resend)
 │   │   ├── comments/route.ts   ← Comments API (file-based /tmp storage)
@@ -39,20 +39,20 @@ src/
 │   ├── contact/
 │   │   └── page.tsx            ← Contact page (empty shell)
 │   ├── cookies/
-│   │   └── page.tsx            ← Cookie policy (empty shell)
+│   │   └── page.tsx            ← Cookie policy — PIPEDA and GDPR compliant
 │   ├── gallery/
 │   │   └── page.tsx            ← Gallery page (empty shell)
 │   ├── privacy/
-│   │   └── page.tsx            ← Privacy policy (empty shell)
+│   │   └── page.tsx            ← Privacy policy — PIPEDA, PIPA, GDPR, CASL compliant
 │   ├── services/
 │   │   └── page.tsx            ← Services page (full implementation)
 │   ├── shop/
 │   │   └── page.tsx            ← Shop page (empty shell, Phase 2)
-│   └── terms/
-│       └── page.tsx            ← Terms of service (empty shell)
-├── components/
-│   ├── Header.tsx              ← Sticky header with mobile hamburger
-│   └── Footer.tsx              ← 4-column footer with contact info
+│   ├── terms/
+│   │   └── page.tsx            ← Terms of service — Ontario law compliant
+│   ├── components/
+│   │   ├── Header.tsx              ← Sticky header with mobile hamburger
+│   │   └── Footer.tsx              ← 4-column footer with contact info
 └── lib/
     ├── design-tokens.ts        ← Colors, fonts, spacing, shadows, breakpoints
     ├── resend.ts               ← Resend client stub
@@ -138,7 +138,17 @@ public/
 | `dba902d` | Jun 18 16:09 | Add article on dog grooming costs | `src/app/blog/vancouver-grooming-cost-2026/page.tsx` |
 | `5a87f5b` | Jun 18 16:13 | Update page.tsx | `src/app/blog/nagayu-spa-vancouver/page.tsx` |
 
-#### Blog Articles Fixed + Voting System (June 18-21, 2026)
+#### Legal Pages + About Page (June 22, 2026)
+
+| Commit | Date | Message | Files Changed |
+|--------|------|---------|---------------|
+| `2ed9a55` | Jun 21 23:xx | Docs: add Supabase env vars to .env.example | `.gitignore`, `next-env.d.ts`, `package-lock.json`, `package.json`, `tsconfig.json` |
+| `f6f084e` | Jun 22 00:xx | feat: add Privacy Policy with PIPEDA, PIPA, GDPR, CASL compliance | `src/app/privacy/page.tsx` |
+| `bffb359` | Jun 22 00:xx | feat: update Terms of Service with correct contact info | `src/app/terms/page.tsx` |
+| `9d3e9cc` | Jun 22 00:xx | Update contact information on privacy page | `src/app/privacy/page.tsx` |
+| `a3de399` | Jun 22 00:xx | feat: add Cookie Policy with PIPEDA and GDPR compliance | `src/app/cookies/page.tsx` |
+| `cb6099a` | Jun 22 00:xx | feat: add Accessibility Statement with WCAG 2.1 AA compliance | `src/app/accessibility/page.tsx` |
+| `052386b` | Jun 22 06:xx | feat: add magazine-style About page with real owners and React animations | `src/app/about/page.tsx` |
 
 | Commit | Date | Message | Files Changed |
 |--------|------|---------|---------------|
@@ -267,6 +277,8 @@ CREATE TABLE likes (
 | Jun 21 | GitHub push blocked by secret scanning | Used GitHub API to push files directly |
 | Jun 21 | Supabase client build-time error | Lazy-import `@supabase/supabase-js` inside route handlers |
 | Jun 21 | Gmail OAuth token expired | Used Zoho SMTP for email sending |
+| Jun 22 | About page needed unique design | Created magazine-style editorial layout inspired by Kinfolk/Cereal with scroll reveal + page tilt animations |
+| Jun 22 | Legal pages all empty | Created Privacy (PIPEDA/PIPA/GDPR/CASL), Terms (Ontario law), Cookies (PIPEDA/GDPR), Accessibility (WCAG 2.1 AA) |
 
 ---
 
@@ -284,6 +296,11 @@ CREATE TABLE likes (
 | **Blog Listing** | /blog | ✅ 4 posts with category filtering, images, excerpts |
 | **Blog Articles (all 4)** | /blog/* | ✅ Full articles with Supabase-powered voting |
 | **Voting System** | All articles | ✅ Helpful/Not Helpful buttons with global Supabase counts |
+| **About Page** | /about | ✅ Magazine-style editorial layout, owner bios, scroll reveal + page tilt animations |
+| **Privacy Policy** | /privacy | ✅ PIPEDA, PIPA, GDPR, CASL compliant |
+| **Terms of Service** | /terms | ✅ Ontario law compliant |
+| **Cookie Policy** | /cookies | ✅ PIPEDA and GDPR compliant |
+| **Accessibility Statement** | /accessibility | ✅ WCAG 2.1 AA compliant |
 | **Design System** | All pages | ✅ Inline styles using design-tokens.ts |
 | **Security Headers** | All pages | ✅ HSTS, CSP, X-Frame-Options, etc. |
 | **Vercel Auto-Deploy** | — | ✅ Connected to GitHub |
@@ -293,10 +310,8 @@ CREATE TABLE likes (
 
 | Feature | Issue | Priority |
 |---------|-------|----------|
-| **About page** | Empty shell | 🟡 Medium |
 | **Contact page** | Empty shell | 🟡 Medium |
 | **Gallery page** | Empty shell | 🟡 Medium |
-| **Legal pages** | Empty shells (privacy, terms, cookies, accessibility) | 🟢 Low |
 | **Shop page** | Empty shell (Phase 2) | 🟢 Low |
 | **Blog page styling** | Uses `<style jsx>` which may not work with static export | 🟡 Medium |
 
