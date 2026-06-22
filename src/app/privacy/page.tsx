@@ -32,7 +32,7 @@ export default function PrivacyPolicy() {
         <p style={{ fontFamily: 'DM Sans, sans-serif', lineHeight: 1.7, color: '#3D2B1F' }}>Our services are not directed to children under 13. We do not knowingly collect information from children.</p>
 
         <h2 style={{ fontFamily: 'Playfair Display, serif', color: '#3D2B1F' }}>Contact</h2>
-        <p style={{ fontFamily: 'DM Sans, sans-serif', lineHeight: 1.7, color: '#3D2B1F' }}>Paw Palace Pet Grooming, Vancouver, British Columbia, Canada. Email: hekayaconcepts@gmail.com</p>
+        <p style={{ fontFamily: 'DM Sans, sans-serif', lineHeight: 1.7, color: '#3D2B1F' }}>Paw Palace Pet Grooming, Vancouver, British Columbia, Canada</p>
       </div>
     </div>
   )
