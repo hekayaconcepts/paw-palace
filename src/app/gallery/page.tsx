@@ -10,7 +10,7 @@ function BeforeAfter({ before, after, breed, service }: BeforeAfterProps) {
   const dragging = useRef(false)
 
   useEffect(() => {
-    function onMove(e: MouseEvent | TouchEvent) {
+    const onMove = (e: MouseEvent | TouchEvent) => {
       if (!dragging.current ||!containerRef.current) return
       const rect = containerRef.current.getBoundingClientRect()
       const clientX = 'touches' in e? e.touches[0].clientX : (e as MouseEvent).clientX
@@ -18,11 +18,13 @@ function BeforeAfter({ before, after, breed, service }: BeforeAfterProps) {
       p = Math.max(0, Math.min(100, p))
       setPos(p)
     }
-    function onUp() { dragging.current = false }
+    const onUp = () => { dragging.current = false }
+
     window.addEventListener('mousemove', onMove)
     window.addEventListener('touchmove', onMove, { passive: true })
     window.addEventListener('mouseup', onUp)
     window.addEventListener('touchend', onUp)
+
     return () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('touchmove', onMove)
@@ -45,7 +47,9 @@ function BeforeAfter({ before, after, breed, service }: BeforeAfterProps) {
         </div>
         <div style={{ position: 'absolute', top: 0, left: `${pos}%`, width: '2px', height: '100%', backgroundColor: 'white', transform: 'translateX(-1px)', pointerEvents: 'none' }}>
           <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 32, height: 32, backgroundColor: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L2 8L6 13M10 3L14 8L10 13" stroke="#3D2B1F" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 3L2 8L6 13M10 3L14 8L10 13" stroke="#3D2B1F" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
           </div>
         </div>
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '14px 16px', background: 'linear-gradient(transparent, rgba(0,0,0,0.75))', color: 'white' }}>
@@ -73,17 +77,17 @@ export default function GalleryPage() {
       `}</style>
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '56px 24px' }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <p style={{ color: '#C67B5C', fontSize: 14, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'DM Sans' }}>Our Work</p>
+          <p style={{ color: '#C67B5C', fontSize: 14, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>Our Work</p>
           <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2.2rem,5vw,3.5rem)', color: '#3D2B1F', margin: 0 }}>Gallery</h1>
-          <p style={{ color: '#6B5D52', fontFamily: 'DM Sans', marginTop: 12 }}>Drag the slider to see before and after</p>
-        </1
-
-div>
+          <p style={{ color: '#6B5D52', fontFamily: 'DM Sans, sans-serif', marginTop: 12 }}>Drag the slider to see before and after</p>
+        </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 24 }}>
-          {items.map((it, i) => <BeforeAfter key={i} {...it} />)}
+          {items.map((it, i) => (
+            <BeforeAfter key={i} {...it} />
+          ))}
         </div>
       </div>
     </div>
   )
-    }
+        }
     
